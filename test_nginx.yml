@@ -12,4 +12,4 @@
         #
     - name: Fail if Hello world is not in the page content
       fail:
-      when: "'Hello world {{inventory_hostname}}' not in webpage.content"
+      when: "('Hello world ' + inventory_hostname) not in webpage.content"
