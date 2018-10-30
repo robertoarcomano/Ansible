@@ -11,7 +11,7 @@ PARAMS="$HOST $HOSTSPATH"
 
 # 2. Launch a command, uptime
 # ansible $HOST -m command -a uptime
-ansible $PARAMS -a uptime
+# ansible $PARAMS -a uptime
 
 # 3. Launch a command, read syslog
 # ansible $PARAMS -a "tail /var/log/syslog"
@@ -29,4 +29,5 @@ ansible $PARAMS -a uptime
 # ansible $HOSTSPATH webservers -m ping
 
 # 8. Playbooks
-ansible-playbook $HOSTSPATH playbook1.yml
+# ansible-playbook $HOSTSPATH install_nginx.yml
+ansible-playbook $HOSTSPATH test_nginx.yml

@@ -1,8 +1,8 @@
 - name: Configure webserver with nginx
-  hosts: webservers
+  hosts: ubuntus
   become: True
   vars:
-    message: "Hello world, this is a custom message from an Ansible playbook var"
+    message: "Hello world {{inventory_hostname}}"
   tasks:
     - name: install nginx
       apt: name=nginx update_cache=yes

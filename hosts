@@ -48,3 +48,15 @@ ubuntu_ssh1 ansible_user=root
 # leading 0s:
 
 #db-[99:101]-node.example.com
+
+[ubuntus]
+ubuntu2 ansible_host=192.168.10.2 ansible_user=root
+ubuntu3 ansible_host=192.168.10.3 ansible_user=root
+ubuntu4 ansible_host=192.168.10.4 ansible_user=root
+ubuntu5 ansible_host=192.168.10.5 ansible_user=root
+ubuntu6 ansible_host=192.168.10.6 ansible_user=root
+ubuntu7 ansible_host=192.168.10.7 ansible_user=root
+ubuntu8 ansible_host=192.168.10.8 ansible_user=root
+ubuntu9 ansible_host=192.168.10.9 ansible_user=root
+ubuntu10 ansible_host=192.168.10.10 ansible_user=root
+ubuntu11 ansible_host=192.168.10.11 ansible_user=root
