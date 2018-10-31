@@ -2,9 +2,9 @@
 
 # 0. Variables
 # HOST=rb2
-HOST=ubuntu_ssh1
+# HOST=ubuntu_ssh1
 HOSTSPATH="-i ./hosts"
-PARAMS="$HOST $HOSTSPATH"
+# PARAMS="$HOST $HOSTSPATH"
 
 # 1. Launch ping command on $HOST
 # ansible $HOST -m ping
@@ -28,6 +28,12 @@ PARAMS="$HOST $HOSTSPATH"
 # 7. Group Execution
 # ansible $HOSTSPATH webservers -m ping
 
-# 8. Playbooks
-# ansible-playbook $HOSTSPATH install_nginx.yml
-ansible-playbook $HOSTSPATH test_nginx.yml
+# 8. Playbooks nginx
+date > log.txt
+ansible-playbook $HOSTSPATH create_image.yml 1>>log.txt 2>&1
+ansible-playbook $HOSTSPATH create_containers.yml 1>>log.txt 2>&1
+ansible-playbook $HOSTSPATH configure_nginx.yml 1>>log.txt 2>&1
+ansible-playbook $HOSTSPATH test_nginx.yml 1>>log.txt 2>&1
+ansible-playbook $HOSTSPATH remove_containers.yml 1>>log.txt 2>&1
+ansible-playbook $HOSTSPATH remove_image.yml 1>>log.txt 2>&1
+date >> log.txt

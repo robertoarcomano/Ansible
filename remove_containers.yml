@@ -1,0 +1,25 @@
+- name: Create Containers
+  hosts: localhost
+  become: False
+  tasks:
+
+  - name: network
+    docker_network:
+      name: my_network
+      state: absent
+
+  - name: Delete old entry from known hosts
+    shell: ssh-keygen -f "/home/berto/.ssh/known_hosts" -R "{{ item.ansible_host }}"
+    with_items: "{{ (groups['ubuntus']| map('extract', hostvars)|list) }}"
+
+  - name: Stop a container
+    docker_container:
+      name: "{{ item.inventory_hostname }}"
+      state: stopped
+    with_items: "{{ (groups['ubuntus']| map('extract', hostvars)|list) }}"
+
+  - name: Remove container
+    docker_container:
+      name: "{{ item.inventory_hostname }}"
+      state: absent
+    with_items: "{{ (groups['ubuntus']| map('extract', hostvars)|list) }}"

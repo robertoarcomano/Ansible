@@ -1,13 +1,9 @@
 - name: Configure webserver with nginx
   hosts: ubuntus
-  become: True
+  become: False
   vars:
     message: "Hello world {{inventory_hostname}}"
   tasks:
-    - name: install nginx
-      apt: name=nginx update_cache=yes
-      notify: restart nginx
-
     - name: copy nginx config file
       copy: src=files/nginx.conf dest=/etc/nginx/sites-available/default
       notify: restart nginx

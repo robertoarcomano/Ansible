@@ -3,9 +3,9 @@
 ## 0. Variables
 ```
 # HOST=rb2
-HOST=ubuntu_ssh1
+# HOST=ubuntu_ssh1
 HOSTSPATH="-i ./hosts"
-PARAMS="$HOST $HOSTSPATH"
+# PARAMS="$HOST $HOSTSPATH"
 ```
 
 ## 1. Launch ping command on $HOST
@@ -32,37 +32,25 @@ ansible $PARAMS -a uptime
 ## 7. Group Execution
 ```ansible $HOSTSPATH webservers -m ping```
 
-## 8. Playbooks
-```ansible-playbook $HOSTSPATH playbook1.yml```
-
-## playbook1.yml
+## 8. Playbooks nginx
 ```
-- name: Configure webserver with nginx
-  hosts: webservers
-  become: True
-  vars:
-    message: "Hello world, this is a custom message from an Ansible playbook var"
-  tasks:
-    - name: install nginx
-      apt: name=nginx update_cache=yes
-      notify: restart nginx
-
-    - name: copy nginx config file
-      copy: src=files/nginx.conf dest=/etc/nginx/sites-available/default
-      notify: restart nginx
-
-    - name: enable configuration
-      file: >
-        dest=/etc/nginx/sites-enabled/default
-        src=/etc/nginx/sites-available/default
-        state=link
-      notify: restart nginx
-
-    - name: copy index.html
-      template: src=templates/index.html.j2 dest=/usr/share/nginx/html/index.html mode=0644
-      notify: restart nginx
-
-  handlers:
-    - name: restart nginx
-      service: name=nginx state=restarted
+date > log.txt
+ansible-playbook $HOSTSPATH create_image.yml 1>>log.txt 2>&1
+ansible-playbook $HOSTSPATH create_containers.yml 1>>log.txt 2>&1
+ansible-playbook $HOSTSPATH configure_nginx.yml 1>>log.txt 2>&1
+ansible-playbook $HOSTSPATH test_nginx.yml 1>>log.txt 2>&1
+ansible-playbook $HOSTSPATH remove_containers.yml 1>>log.txt 2>&1
+ansible-playbook $HOSTSPATH remove_image.yml 1>>log.txt 2>&1
+date >> log.txt
 ```
+
+## Playbooks Files
+#### <a href=create_image.yml>create_image.yml</a>
+#### <a href=create_containers.yml>create_containers.yml</a>
+#### <a href=configure_nginx.yml>configure_nginx.yml</a>
+#### <a href=test_nginx.yml>test_nginx.yml</a>
+#### <a href=remove_containers.yml>remove_containers.yml</a>
+#### <a href=remove_image.yml>remove_image.yml</a>
+
+## Log File
+#### <a href=log.txt>log.txt</a>

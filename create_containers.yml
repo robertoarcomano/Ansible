@@ -1,0 +1,25 @@
+- name: Create Containers
+  hosts: localhost
+  become: False
+  tasks:
+
+  - name: network
+    docker_network:
+      name: my_network
+      ipam_options:
+        subnet: '192.168.10.0/24'
+        gateway: 192.168.10.1
+
+  - name: create container
+    docker_container:
+      name: "{{ item.inventory_hostname }}"
+      image: ubuntu_sshd
+      state: started
+      networks:
+      - name: my_network
+        ipv4_address: "{{ item.ansible_host }}"
+      capabilities:
+      - NET_ADMIN
+      devices:
+      - /dev/net/tun
+    with_items: "{{ (groups['ubuntus']| map('extract', hostvars)|list) }}"

@@ -1,15 +1,12 @@
 - name: Test nginx webserver
   hosts: ubuntus
-  become: True
+  become: False
   tasks:
     - name: Check by GET
       uri:
         url: http://{{inventory_hostname}}
         return_content: yes
       register: webpage
-    - name: check webpage
-      shell: echo "{{ webpage.content }}" > /tmp/webpage
-        #
     - name: Fail if Hello world is not in the page content
       fail:
       when: "('Hello world ' + inventory_hostname) not in webpage.content"

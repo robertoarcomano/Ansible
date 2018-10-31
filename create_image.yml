@@ -1,0 +1,8 @@
+- name: Create Ubuntu Image (ssh server + PK Auth)
+  hosts: localhost
+  become: False
+  tasks:
+  - name: create Nginx image
+    docker_image:
+      name: ubuntu_sshd
+      path: .
