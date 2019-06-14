@@ -29,6 +29,7 @@ HOSTSPATH="-i ./hosts"
 # ansible $HOSTSPATH webservers -m ping
 
 # 8. Playbooks nginx
+cp -f ~/.ssh/id_rsa.pub .
 date > log.txt
 ansible-playbook $HOSTSPATH create_image.yml 1>>log.txt 2>&1
 ansible-playbook $HOSTSPATH create_containers.yml 1>>log.txt 2>&1
